@@ -27,7 +27,7 @@ A few functions in this code were lifted from [the official implementation](http
 
 ***⚠️ If you just want to use GPFNs with your own data, this is the easiest option. ⚠️***
 
-There is a [Docker image](https://dockerhub.io/jubbens/gpfn) provided for those who want to use trained GPFNs. Because of GitHub's git-lfs bandwidth limits, this is currently the only way to download the trained models.
+There is a [Docker image](https://hub.docker.com/repository/docker/jubbens) provided for those who want to use trained GPFNs. Because of GitHub's git-lfs bandwidth limits, this is currently the only way to download the trained models.
 
 ### Installing Docker
 
@@ -37,10 +37,13 @@ First, you should [install docker](https://docs.docker.com/) according to the di
 
 Below are the currently offered fit models. All of them are included in the docker image.
 
-| Name     | Path               | Compatible Population Types | Parameters  | File Size |
-|----------|--------------------|-----------------------------|-------------|-----------|
-| Pika     | `deploy/pika.pt`     | Nested Association Mapping  | 311 million | 1.16 GB   |
-| Mongoose | `deploy/mongoose.pt` | Unstructured (diverse)      | 311 million | 1.16 GB   |
+| Name     | Path                 | Compatible Population Types                              | Parameters | File Size |
+|----------|----------------------|----------------------------------------------------------|------------|-----------|
+| Pika     | `deploy/pika.pt`     | Nested Association Mapping (between-families prediction) | 311M       | 1.16 GB   |
+| Mongoose | `deploy/mongoose.pt` | Unstructured (diverse)                                   | 311M       | 1.16 GB   |
+| Wombat   | `deploy/wombat.pt`   | da Silva et al. [^1]                                     | 311M       | 1.16 GB   |
+
+[^1]: Implements the genomic selection scheme proposed for Soybean in [(da Silva et al. 2021)](https://doi.org/10.3389/fgene.2021.637133).
 
 ### Step 1: Parse your training and target data.
 
@@ -118,7 +121,7 @@ You should now have two new files in your data directory: one containing the tra
 We can now get predictions for our target population. Since we want to use the GPU for inference, let's include `--gpus all`. The only other thing to note is that we pointed to `deploy/pika.pt` as the model to use. A full list of available models is provided in the table above.
 
 ```console
-foo@bar:~$ docker run --gpus all --rm -it -v /path/to/my/data:/data gpfn --model_path deploy/mongoose.pt --train_path yield.variants2.bin --target_path no-phenotypes.variants2.bin
+foo@bar:~$ docker run --gpus all --rm -it -v /path/to/my/data:/data jubbens/gpfn --model_path deploy/mongoose.pt --train_path yield.variants2.bin --target_path no-phenotypes.variants2.bin
 
 Running in docker detected.
 CUDA is available.
@@ -131,7 +134,7 @@ Eval samples: 374
 Success! Taxa and their predictions for the target dataset were written to /data/yield.variants2.bin-predicted.csv 🍺
 ```
 
-You should be able to find the predicted GEBVs in `yield.variants2.bin-predicted.csv` in your data folder.
+You should be able to find the predicted GEBVs in `yield.variants2.bin-predicted.csv` in your data folder. Note that these predicted values are normalized - if the absolute values matter to you, then add the training population mean and multiply by its standard deviation.
 
 ## Fitting Models in Python
 
@@ -234,7 +237,7 @@ optional arguments:
   --asynchronous        If set, the dataloader watches the cache directory and waits for data to appear. (default: False)
 ```
 
-The default batch size is based on a single 24GB GPU, so you may have to go with a smaller one. Of course, the number of gradient accumulation steps and/or the learning rate will need to be tuned.
+The default batch size is based on a single 16GB GPU, so you may have to go with a smaller one. Of course, the number of gradient accumulation steps and/or the learning rate will need to be tuned.
 
 ### Fitting New Models on HPC
 
