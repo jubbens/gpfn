@@ -2,9 +2,9 @@
 
 This repo provides a codebase for building and deploying Genomic Prior-Data Fitted Networks (GPFNs).
 
-If you use this code, please cite [todo].
+If you use this code, please cite:
 
-A few functions in this code were lifted from [the official implementation](https://github.com/automl/TransformersCanDoBayesianInference) of Prior-Data Fitted Networks by Müller et al. Where this is the case, a comment should accompany.
+GPFN: Prior-Data Fitted Networks for Genomic Prediction (2023). Ubbens J., Stavness, I. & Sharpe, A.G. bioRxiv 2023.09.20.558648; doi: [https://doi.org/10.1101/2023.09.20.558648](https://doi.org/10.1101/2023.09.20.558648)
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@ A few functions in this code were lifted from [the official implementation](http
 
 ***⚠️ If you just want to use GPFNs with your own data, this is the easiest option. ⚠️***
 
-There is a [Docker image](https://hub.docker.com/repository/docker/jubbens) provided for those who want to use trained GPFNs. Because of GitHub's git-lfs bandwidth limits, this is currently the only way to download the trained models.
+There is a [Docker image](https://hub.docker.com/r/jubbens/gpfn) provided for those who want to use trained GPFNs. Because of GitHub's git-lfs bandwidth limits, this is currently the only way to download the trained models.
 
 ### Installing Docker
 
@@ -311,3 +311,5 @@ The corresponding loader extends the `Prior` superclass which itself is a Pytorc
 ## License
 
 This material is licensed under the terms of the GPLv3 Open Source license.
+
+A few functions in this code were lifted from [the official implementation](https://github.com/automl/TransformersCanDoBayesianInference) of Prior-Data Fitted Networks by Müller et al. Where this is the case, a comment should accompany.
