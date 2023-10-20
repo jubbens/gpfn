@@ -22,5 +22,14 @@ try:
         l = p.stdout.readline().decode("utf-8")
         if l != '':
             print(l)
+
+    while True:
+        e = p.stderr.readline().decode("utf-8")
+
+        if not e:
+            break
+
+        if e != '':
+            print(e)
 except subprocess.CalledProcessError as exc:
     print('Something went wrong:', exc.returncode, exc.output)
