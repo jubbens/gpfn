@@ -4,7 +4,7 @@ This repo provides a codebase for building and deploying Genomic Prior-Data Fitt
 
 If you use this code, please cite:
 
-GPFN: Prior-Data Fitted Networks for Genomic Prediction (2023). Ubbens J., Stavness, I. & Sharpe, A.G. bioRxiv 2023.09.20.558648; doi: [https://doi.org/10.1101/2023.09.20.558648](https://doi.org/10.1101/2023.09.20.558648)
+GPFN: Prior-Data Fitted Networks for Genomic Prediction (2023). Ubbens J., Stavness, I. & Sharpe, A.G. bioRxiv 2023.09.20.558648; doi: [10.1101/2023.09.20.558648](https://doi.org/10.1101/2023.09.20.558648)
 
 ## Table of Contents
 
@@ -121,7 +121,7 @@ You should now have two new files in your data directory: one containing the tra
 We can now get predictions for our target population. Since we want to use the GPU for inference, let's include `--gpus all`. The only other thing to note is that we pointed to `deploy/pika.pt` as the model to use. A full list of available models is provided in the table above.
 
 ```console
-foo@bar:~$ docker run --gpus all --rm -it -v /path/to/my/data:/data jubbens/gpfn --model_path deploy/mongoose.pt --train_path yield.variants2.bin --target_path no-phenotypes.variants2.bin
+foo@bar:~$ docker run --gpus all --rm -it -v /path/to/my/data:/data jubbens/gpfn --model_path deploy/pika.pt --train_path yield.variants2.bin --target_path no-phenotypes.variants2.bin
 
 Running in docker detected.
 CUDA is available.
